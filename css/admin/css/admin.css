@@ -1,0 +1,6 @@
+.message-box{
+    position: absolute;
+    z-index: 999;
+    top: 14%;
+    right: 35%;
+}
