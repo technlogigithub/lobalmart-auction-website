@@ -377,7 +377,9 @@
       </div>
     </div> -->
 
-    <!-- @php
+     @php
+
+        
         $Sessiondata = session()->get('search');
     @endphp
 
@@ -385,6 +387,8 @@
 
           @php
 
+            echo "Search Page If";
+        
              $homeCity = !empty($Sessiondata[0]['city_search_box']) ? $Sessiondata[0]['city_search_box'] : '';
              $homeCategory = !empty($Sessiondata[0]['category_box']) ? $Sessiondata[0]['category_box'] : '';
              $homeword = !empty($Sessiondata[0]['word_box']) ? $Sessiondata[0]['word_box'] : '';
@@ -406,10 +410,11 @@
             
 
         @else
-
+          
           @php
 
-           
+           echo "Search Page else";
+        
             $homeCity = '';
             $homeCategory = '';
             $homeword = '';
@@ -417,7 +422,18 @@
             $search_longitude = !empty($Sessiondata[0]['clg']) ? $Sessiondata[0]['clg'] : '';
           @endphp
 
-        @endif -->
+        @endif 
+        
+        @php
+          echo $homeCity;
+          echo $homeCategory;
+          echo $homeword;
+          echo $search_latitude;
+          echo $search_longitude;
+
+          die();
+        @endphp
+      
         <!-- <form method="post" id="search_form" class="search_form" action="#" autocomplete="off">
                   <div class="dropdown category-dropdown">
                           <input type="hidden" name="search_latitude" id="lat" value="{{$search_latitude}}">
@@ -931,7 +947,7 @@
 @push('javaScript')
 
 
-<script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAQsVSjofHfiWHWqai-0shuFexPke1-NEQ" type="text/javascript"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAQsVSjofHfiWHWqai-0shuFexPke1-NEQ" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function() {
       

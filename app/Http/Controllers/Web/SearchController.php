@@ -286,8 +286,73 @@ class SearchController extends Controller
 	public function getItem(Request $request,$page='0')
 	{
 
+		// // 1. Retrieve the session data
+        // $Sessiondata = session()->get('search', []);
+
+		// // echo 'Hello';
+       	// echo '<pre>';
+        // print_r($Sessiondata);
+        // print_r($request->data);
+        // die();
+
+		// 1. Retrieve the session data
+        $Sessiondata = session()->get('search', []);
+
+        Session::forget('search','');
+        
+        // 2. Loop through each item and remove the keys
+			foreach ($Sessiondata as &$item) {
+				if($item)
+                {
+                    $clt = $item['clt'];
+                    $clg = $item['clg'];
+                    $cloc = $item['cloc'];
+
+                    unset($item['clt'], $item['clg'], $item['cloc']);
+                }
+                
+                
+			}
+
+            // Unset reference to avoid unexpected behavior
+			unset($item);
+        
+        // When Click on Home Page - Location Search
+        // echo "<pre>";
+		// print_r($_COOKIE);
+		if($request->data['location_data'])
+        {
+            // echo "location_data : Available";
+			// 3. Save the updated array back to session
+			// session()->put('search', $Sessiondata);
+
+			// echo $request->data['location_data'][1]['value'];
+			// echo $request->data['location_data'][2]['value'];
+			// echo $request->data['location_data'][3]['value'];
+			Session::push('search', [
+			
+				'clt'=> $request->data['location_data'][1]['value'],
+				'clg'=> $request->data['location_data'][2]['value'],
+				'cloc' => $request->data['location_data'][3]['value']
+			]);
+
+			setcookie('lt', $request->data['location_data'][1]['value'], time() + (86400 * 30), "/");
+			setcookie('lg', $request->data['location_data'][2]['value'], time() + (86400 * 30), "/");
+			setcookie('accu', 'searchCon', time() + (86400 * 30), "/");
+        }
+
+		
+		echo "<pre>";
+		print_r($request->data['location_data']);
+		print_r($_COOKIE);
+		// die();
+		
+		// 1. Retrieve the session data
+        $Sessiondata = session()->get('search', []);
+
 		// echo 'Hello';
        	echo '<pre>';
+        print_r($Sessiondata);
         print_r($request->data);
         // die();
 
@@ -1079,7 +1144,14 @@ class SearchController extends Controller
 		echo "<pre>";				
 			// post found - its works		
 		print_r($donationFinalResults);
-		die();
+
+		$Sessiondata = session()->get('search');
+		
+		echo "<pre>";
+		print_r($Sessiondata);
+		print_r($_COOKIE);
+
+		// die();
 
 			if ($total_page > 0) 
 			{

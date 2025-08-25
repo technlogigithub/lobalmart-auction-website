@@ -157,7 +157,11 @@ class CategoryController extends Controller
        //  print_r($end_array);
        // die();
         
+        
+        // print_r($request->search_latitude);
+        // print_r($request->search_longitude);
         // print_r($request->city_search_box);
+
         // print_r($request->category_box);
         // print_r($request->word_box);
         // die();
@@ -182,19 +186,67 @@ class CategoryController extends Controller
             $dist_unt = '';
         }
 
-        
-        $Sessiondata = session()->get('search');
-
-        // print_r($Sessiondata);
-        // print_r($_token);
-        // die();
-
-        $clt    =    $Sessiondata[0]['clt'];
-        $clg    =    $Sessiondata[0]['clg'];
-        $cloc    =    $Sessiondata[0]['cloc'];
-
+        // 1. Retrieve the session data
+        $Sessiondata = session()->get('search', []);
 
         Session::forget('search','');
+        
+        // 2. Loop through each item and remove the keys
+			foreach ($Sessiondata as &$item) {
+				if($item)
+                {
+                    $clt = $item['clt'];
+                    $clg = $item['clg'];
+                    $cloc = $item['cloc'];
+
+                    unset($item['clt'], $item['clg'], $item['cloc']);
+                }
+                
+                
+			}
+
+            // Unset reference to avoid unexpected behavior
+			unset($item);
+        
+        // When Click on Home Page - Location Search
+        if($request->search_latitude && $request->search_longitude && $request->city_search_box)
+        {
+            // 3. Save the updated array back to session
+			// session()->put('search', $Sessiondata);
+
+			Session::push('search', [
+			
+				'clt'=> $request->search_latitude,
+				'clg'=> $request->search_longitude,
+				'cloc' => $request->city_search_box
+			]);
+        }
+        // When Click on Home Page - Category
+        else
+        {
+            // 3. Save the updated array back to session
+			// session()->put('search', $Sessiondata);
+
+			Session::push('search', [
+			
+				'clt'=> $clt,
+				'clg'=> $clg,
+				'cloc' => $cloc
+			]);
+        }
+            
+			
+        // $Sessiondata = session()->get('search');
+        // echo "<pre>";
+        // print_r($Sessiondata);
+        // die();
+
+        // $clt    =    $Sessiondata[0]['clt'];
+        // $clg    =    $Sessiondata[0]['clg'];
+        // $cloc    =    $Sessiondata[0]['cloc'];
+
+
+        
 
 
 
@@ -213,9 +265,9 @@ class CategoryController extends Controller
                 'search_latitude'=> $request->search_latitude,
                 'search_longitude'=> $request->search_longitude,
 
-                'clt' => $clt,
-                'clg' => $clg,
-                'cloc' => $cloc,
+                // 'clt' => $clt,
+                // 'clg' => $clg,
+                // 'cloc' => $cloc,
 
                 'category_box'=> $request->category_box,
                 'word_box' => $request->word_box,
@@ -240,9 +292,9 @@ class CategoryController extends Controller
                 'search_latitude'=> '',
                 'search_longitude'=> '',
 
-                'clt' => $clt,
-                'clg' => $clg,
-                'cloc' => $cloc,
+                // 'clt' => $clt,
+                // 'clg' => $clg,
+                // 'cloc' => $cloc,
 
                 'category_box'=> $category_box,
                 'word_box' => '',
@@ -267,9 +319,9 @@ class CategoryController extends Controller
                 'search_latitude'=> $request->search_latitude,
                 'search_longitude'=> $request->search_longitude,
 
-                'clt' => $clt,
-                'clg' => $clg,
-                'cloc' => $cloc,
+                // 'clt' => $clt,
+                // 'clg' => $clg,
+                // 'cloc' => $cloc,
 
                 'category_box'=> $request->category_box,
                 'word_box' => $request->word_box,
@@ -283,6 +335,11 @@ class CategoryController extends Controller
 
 
         }
+
+        // $Sessiondata = session()->get('search');
+        // echo "<pre>";
+        // print_r($Sessiondata);
+        // die();
 
         // echo "GP";
         // $Sessiondata = session()->get('search');

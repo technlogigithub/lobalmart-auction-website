@@ -12,6 +12,7 @@
         
 
         // Sessiondata come from CategoryController >> searchCategory
+        
         if(isset($Sessiondata))
         {
             $Sessiondata;
@@ -21,6 +22,9 @@
 
             $Sessiondata = session()->get('search');
         }
+        // echo "<pre>";
+        // print_r($Sessiondata);
+        // die();
     
     @endphp
 
@@ -29,27 +33,39 @@
 
           @php
 
-             $homeCity = !empty($Sessiondata[0]['city_search_box']) ? $Sessiondata[0]['city_search_box'] : '';
-             $homeCategory = !empty($Sessiondata[0]['category_box']) ? $Sessiondata[0]['category_box'] : '';
-             $homeword = !empty($Sessiondata[0]['word_box']) ? $Sessiondata[0]['word_box'] : '';
+            for ($i=0; $i < count($Sessiondata); $i++) 
+            { 
+                
+                if(!empty($Sessiondata[$i]))
+                {
+                    $homeCity = !empty($Sessiondata[$i]['city_search_box']) ? $Sessiondata[$i]['city_search_box'] : '';
+                    $homeCategory = !empty($Sessiondata[$i]['category_box']) ? $Sessiondata[$i]['category_box'] : '';
+                    $homeword = !empty($Sessiondata[$i]['word_box']) ? $Sessiondata[$i]['word_box'] : '';
 
-            if (!empty($Sessiondata[0]['search_latitude'])) {
-              $search_latitude = $Sessiondata[0]['search_latitude'];
-              $search_longitude = $Sessiondata[0]['search_longitude'];
-              $search_location = $Sessiondata[0]['city_search_box'];
+                    if (!empty($Sessiondata[$i]['search_latitude'])) {
+                    $search_latitude = $Sessiondata[$i]['search_latitude'];
+                    $search_longitude = $Sessiondata[$i]['search_longitude'];
+                    $search_location = $Sessiondata[$i]['city_search_box'];
 
-            } 
-            else if(!empty($Sessiondata[0]['clt'])){
-              $search_latitude = $Sessiondata[0]['clt'];
-              $search_longitude = $Sessiondata[0]['clg'];
-              $search_location = $Sessiondata[0]['cloc'];
+                    } 
+                    else if(!empty($Sessiondata[$i]['clt'])){
+                    $search_latitude = $Sessiondata[$i]['clt'];
+                    $search_longitude = $Sessiondata[$i]['clg'];
+                    $search_location = $Sessiondata[$i]['cloc'];
+                    }
+                    else{
+                    $search_latitude = '';
+                    $search_longitude = '';
+                    $search_location = '';
+                    }
+                }
             }
-            else{
-              $search_latitude = '';
-              $search_longitude = '';
-              $search_location = '';
-            }
 
+            // echo 'search_latitude - '.$search_latitude;
+            //         echo 'search_longitude - '.$search_longitude;
+            //         echo 'search_location - '.$search_location;
+
+            // die();
           @endphp
             
 
@@ -125,7 +141,7 @@
                                                                 <input type="hidden" name="search_latitude" id="lat" value="{{$search_latitude}}">
                                                                 <input type="hidden" name="search_longitude" id="lon" value="{{$search_longitude}}">
 
-                                                                <input type="text" id="searchTextField" name="city_search_box" class="city_search_box" value="{{$search_location}}" placeholder="Enter Location" id="city_search_box">
+                                                                <input type="text" id="searchTextField1" name="city_search_box" class="city_search_box" value="{{$search_location}}" placeholder="Enter Location" id="city_search_box">
 
                                                                 <button type="submit">
                                                                     <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">

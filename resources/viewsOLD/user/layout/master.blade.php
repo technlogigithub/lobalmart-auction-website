@@ -41,7 +41,7 @@
         <!-- JS -->
         <script src="{{ URL::asset('/js/user/js/jquery.min.js')}}"></script>
         <script src="{{ URL::asset('/js/user/js/bootstrap.min.js')}}"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAQsVSjofHfiWHWqai-0shuFexPke1-NEQ" type="text/javascript"></script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAQsVSjofHfiWHWqai-0shuFexPke1-NEQ" type="text/javascript"></script>
         <script src="{{ URL::asset('/js/user/js/gmaps.min.js')}}"></script>
         <script src="{{ URL::asset('/js/user/js/map.js')}}"></script>
         <script src="{{ URL::asset('/js/user/js/owl.carousel.min.js')}}"></script>

@@ -232,91 +232,119 @@ input[type='checkbox']:checked:before {
                             
                                 <input type="hidden" name="key" value="{{$key}}"/>
                                 <div class="section postdetails">
-                                    <div class="row form-group">
-                                        
-                                        <label class="col-sm-3 label-title">Auction Type<span class="required"> *</span></label>
-                                        
+                                    <!-- <h4>Donate anything, whatever you can think. 
+                                        <span class="pull-right">* Mandatory Fields</span>
+                                    </h4> -->
+                                        <!-- <?php $base_url = URL::to('/'); ?>
+                                        <b>BULK UPLOAD:</b> 
+                                        <form method='post' action="{{ route('user.donation.import_upload' )}}"  enctype='multipart/form-data' >
+                                           {{ csrf_field() }}
+                                           <input type='file' name='file' style="display: inline !important; background-color: #DDD;">
+                                           <input type='submit' class="btn-main" name='submit' value='Import'>
+                                         </form>
+                                        <a href="<?php echo $base_url?>/images/uploads/postCSVimport/sample.csv" target ="_blank">Sample for Helper</a> |
+                                        <a href="<?php echo $base_url?>/images/uploads/postCSVimport/sample.csv" target ="_blank">Sample for Donor</a>  -->
 
-                                        <div class="col-sm-9 user-type d-flex flex-wrap gap-3">
-                                            
-                                            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 col-xl-5 radio-wrapper">
-                                                <input type="radio" <?php if(!empty($posts)){ if($posts->donation_type_id == "1"){ echo 'checked'; } } ?> name="donation" value="1" id="donor" onclick="showhideDonor()" />
-                                                <label for="donor" title="Who have something to give voluntarily to another." data-toggle="tooltip">Forward Auction</label>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 radio-wrapper">
-                                                <input type="radio" <?php if(!empty($posts)){ if($posts->donation_type_id == "2"){ echo 'checked'; } } ?> name="donation" value="2" id="helper-of-donor" onclick="showhidehelper()" />
-                                                <label for="helper-of-donor" title="Who ready to help voluntarily to the Donor." data-toggle="tooltip">Forward Auction by Agent</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3 user-type d-flex flex-wrap gap-3">
-                                        </div>
-                                        <div class="col-sm-9 user-type d-flex flex-wrap gap-3">    
-                                            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 col-xl-5 radio-wrapper">
-                                                <input type="radio" <?php if(!empty($posts)){ if($posts->donation_type_id == "3"){ echo 'checked'; } } ?> name="donation" value="3" id="donee" onclick="showhideDonor()" />
-                                                <label for="donee" title="Who is in need of something and ready to request for the thing." data-toggle="tooltip">Reverse Auction</label>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 radio-wrapper">
-                                                <input type="radio" <?php if(!empty($posts)){ if($posts->donation_type_id == "4"){ echo 'checked'; } } ?> name="donation" value="4" id="helper-of-donee" onclick="showhidehelper()" />
-                                                <label for="helper-of-donee" title="Who ready to help voluntarily to the Donee." data-toggle="tooltip">Reverse Auction by Agent</label>
-                                            </div>
-                                            @if ($errors->has('donation'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('donation') }}</strong>
-                                            </span>
-                                            @endif
-                                        </div>
-                                            
                                         
-                                    </div>
+                                    {{-- <div class="form-group selected-product">
+                                        <ul class="select-category list-inline">
+                                            <li style="margin-right: 20px;">
+                                                {{$category->name }}
+                                            </li>
+                                            <li style="margin-right: 20px;">
+                                                {{$subcategory->name }}
+                                            </li>
+                                            <li class="active" style="padding: 0px; margin-right: 20px;">
+                                                {{ $specification->name }}
+                                            </li>
+                                        </ul>
 
+                                        <!-- <a class="edit" href="{{ route('web.donation.category') }}"><i class="fa fa-pencil"></i>Edit</a> -->
+                                    </div> --}}
 
-                                
+                                               <!--  <div class="row form-group">
+                                            <label class="col-sm-3">I Am / We Are<span class="required"> *</span></label>
+                                            <div class="col-sm-9 user-type">
+                                                <input type="radio" <?php if(!empty($posts)){ if($posts->donation_type_id == "1"){ echo 'checked'; } } ?>  name="donation" value="1" id="donor" onclick="showhideDonor()"> <label for="newsell" data-toggle="tooltip" data-placement="top" title="Who have something to give voluntarily to another.">Donor / Provider </label>
+                                                <input type="radio" <?php if(!empty($posts)){ if($posts->donation_type_id == "2"){ echo 'checked'; } } ?> name="donation" value="2" id="helper-of-donor" onclick="showhidehelper()"> <label for="newbuy" data-toggle="tooltip" title="Who ready to help voluntarily to the Donor.">Helper of Donor</label> 
+                                            </div>
+                                        </div> -->
+
                                     
-                                    <div class="row form-group select-condition">
-                                        <label class="col-sm-3 label-title">Mode of Auction<span class="required"> *</span></label>
-                                        <div class="col-sm-9 user-type d-flex flex-wrap gap-3">
-                                            <?php
-                                                $_donation_type=-1;
-                                                if(old('donation_type')!='' && old('donation_type')!=2 && old('donation_type')!=3 && old('donation_type')!=4 ) 
-                                                {    $_donation_type=1;     }
-                                            ?>
-                                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 col-xl-2">
-                                               
-                                                <input  type="radio" onclick="hidetxtAnyOthermeans()"  checked="checked" name="donation_type" value="1" id="english"  <?php if(!empty($posts)){ if($posts->donation_type_id == "1"){ echo 'checked'; } } ?>  >
-                                                <label for="english" data-toggle="tooltip" data-placement="right" title="Go nearby other party & complete donation face to face.">English </label>
+                                    
+
+                                    <div class="row form-group form-line active">
+                                        
+                                        <label class="col-sm-3">I Am / We Are<span class="required"> *</span></label>
+                                        <fieldset>
+
+                                            <div class="col-sm-12 user-type">
+
+                                                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 col-xl-3 radio-wrapper">
+                                                    <input  type="radio" <?php if(!empty($posts)){ if($posts->donation_type_id == "1"){ echo 'checked'; } } ?>  name="donation" value="1" id="donor" onclick="showhideDonor()"  />
+                                                    <label for="donor" data-toggle="tooltip" data-placement="right" title="Who have something to give voluntarily to another." required>Donor / Provider </label>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 col-xl-3 radio-wrapper">
+                                                    <input type="radio" <?php if(!empty($posts)){ if($posts->donation_type_id == "2"){ echo 'checked'; } } ?> name="donation" value="2" id="helper-of-donor" onclick="showhidehelper()">
+                                                    <label for="helper-of-donor" data-toggle="tooltip" data-placement="right" title="Who ready to help voluntarily to the Donor.">Helper of Donor </label>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 col-xl-3 radio-wrapper">
+                                                    <input type="radio" <?php if(!empty($posts)){ if($posts->donation_type_id == "3"){ echo 'checked'; } } ?> name="donation" value="3" id="donee" onclick="showhideDonor()" >
+                                                    <label for="donee" data-toggle="tooltip" data-placement="right" title="Who is in need of something and ready to request for the thing.">Donee / Needy </label>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 col-xl-3 radio-wrapper">
+                                                    <input type="radio" name="donation" <?php if(!empty($posts)){ if($posts->donation_type_id == "4"){ echo 'checked'; } } ?> value="4" id="helper-of-donee" onclick="showhidehelper()" >
+                                                    <label for="helper-of-donee"  data-toggle="tooltip" data-placement="right" title="Who ready to help voluntarily to the Donee.">Helper of Donee</label> 
+                                                </div>
+                                                @if ($errors->has('donation'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('donation') }}</strong>
+                                                </span>
+                                                @endif
                                             </div>
-                                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 col-xl-2">    
-                                                <input  type="radio" onclick="hidetxtAnyOthermeans()" name="donation_type" value="2" id="dutch"  <?php if(!empty($posts)){ if($posts->donation_type_id == "2"){ echo 'checked'; } } ?>  >
-                                                <label for="dutch" data-toggle="tooltip" data-placement="right" title="Call in other party & complete donation face to face.">Dutch</label>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 col-xl-2">   
-                                                <input type="radio" onclick="hidetxtAnyOthermeans()" name="donation_type"  value="3" id="japanese"  <?php if(!empty($posts)){ if($posts->donation_type_id == "3"){ echo 'checked'; } } ?>>
-                                                <label for="japanese">  Japanese</label>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 col-xl-2">   
-                                                <input type="radio" onclick="hidetxtAnyOthermeans()" name="donation_type"  value="4" id="vickrey"  <?php if(!empty($posts)){ if($posts->donation_type_id == "4"){ echo 'checked'; } } ?>>
-                                                <label for="vickrey">  Vickrey</label>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 col-xl-2">   
-                                                <input type="radio" onclick="hidetxtAnyOthermeans()" name="donation_type"  value="5" id="sealed"  <?php if(!empty($posts)){ if($posts->donation_type_id == "5"){ echo 'checked'; } } ?>>
-                                                <label for="sealed">  Sealed</label>
-                                            </div> 
-                                            
-                                            
-                                            
-                                        </div>
-                                        @if ($errors->has('donation_type'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('donation_type') }}</strong>
-                                        </span>
-                                        @endif
+                                        </fieldset>
                                     </div>
 
-                                    <div class="row form-group">
-                                        <label class="col-sm-3 label-title">Auction Location<span class="required"> *</span></label>
+
+                                    <!-- <div class="row form-group">
+                                        
+                                        <label class="col-sm-3">I Am / We Are<span class="required"> *</span></label>
+                                        <fieldset>
+
+                                            <div class="col-sm-12 user-type">
+
+                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 radio-wrapper">
+                                                    <input  type="radio" <?php if(!empty($posts)){ if($posts->donation_type_id == "1"){ echo 'checked'; } } ?>  name="donation" value="1" id="donor" onclick="showhideDonor()"  />
+                                                    <label for="donor">Donor / Provider  <span class="fa fa-info-circle" data-toggle="tooltip" title="Who have something to give voluntarily to another."></span></label>
+                                                </div>
+                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 radio-wrapper">
+                                                    <input type="radio" <?php if(!empty($posts)){ if($posts->donation_type_id == "2"){ echo 'checked'; } } ?> name="donation" value="2" id="helper-of-donor" onclick="showhidehelper()">
+                                                    <label for="helper-of-donor">Helper of Donor <span class="fa fa-info-circle" data-toggle="tooltip" title="Who ready to help voluntarily to the Donor."></span></label>
+                                                </div>
+                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 radio-wrapper">
+                                                    <input type="radio" <?php if(!empty($posts)){ if($posts->donation_type_id == "3"){ echo 'checked'; } } ?> name="donation" value="3" id="donee" onclick="showhideDonor()" >
+                                                    <label for="donee">Donee / Needy  <span class="fa fa-info-circle" data-toggle="tooltip" title="Who is in need of something and ready to request for the thing."></span></label>
+                                                </div>
+                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 radio-wrapper">
+                                                    <input type="radio" name="donation" <?php if(!empty($posts)){ if($posts->donation_type_id == "4"){ echo 'checked'; } } ?> value="4" id="helper-of-donee" onclick="showhidehelper()" >
+                                                    <label for="helper-of-donee">Helper of Donee <span class="fa fa-info-circle" data-toggle="tooltip" title="Who ready to help voluntarily to the Donee."></span></label> 
+                                                </div>
+                                                @if ($errors->has('donation'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('donation') }}</strong>
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </fieldset>
+                                    </div> -->
+                                    
+                                    
+
+                                    <div class="row form-group form-line">
+                                        <label class="col-sm-3 label-title">Donation Location<span class="required"> *</span></label>
                                         <div class="col-sm-9">
                                             
-                                            <input type="text" id="searchTextField" class="form-control" name="city" placeholder="Select auction location" value="<?php if(!empty($posts)){  echo $posts->address ;  } ?>" autocomplete="off">
+                                            <input type="text" id="searchTextField" class="form-control" name="city" placeholder="Select donation location" value="<?php if(!empty($posts)){  echo $posts->address ;  } ?>" autocomplete="off">
                                             <input type="hidden" name="city_lat" id="text" value="<?php if(!empty($posts)){  echo $posts->lat;  } ?>">
                                             <input type="hidden" name="city_long" id="text" value="<?php if(!empty($posts)){  echo $posts->long ;  } ?>">
 
@@ -332,10 +360,10 @@ input[type='checkbox']:checked:before {
                                         </div>
                                     </div>
 
-                                    <div class="row form-group add-title">
+                                    <div class="row form-group add-title form-line">
                                         <label class="col-sm-3 label-title">Landmark<span class="required"> *</span></label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="landmark" id="landmark" value="<?php if(!empty($posts)){  echo $posts->landmark ;  } ?>" placeholder="Eg: Plot 206, Road 4, Sector 1">
+                                            <input type="text" class="form-control" name="landmark" id="landmark" value="<?php if(!empty($posts)){  echo $posts->landmark ;  } ?>" placeholder="Eg: Flat A206, Nilgiri Regency">
                                             @if ($errors->has('landmark'))
                                             <span class="help-block">
                                                 <strong>{{ $errors->first('landmark') }}</strong>
@@ -345,10 +373,10 @@ input[type='checkbox']:checked:before {
                                     </div>
 
 
-                                    <div class="row form-group add-title">
+                                    <div class="row form-group add-title form-line">
                                         <label class="col-sm-3 label-title">Title<span class="required"> *</span></label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="title" id="text" value="<?php if(!empty($posts)){  echo $posts->title ;  } ?>" placeholder="Eg: Auction of aluminium wire scrap">
+                                            <input type="text" class="form-control" name="title" id="text" value="<?php if(!empty($posts)){  echo $posts->title ;  } ?>" placeholder="Eg: I want to give AB+ Blood">
                                             @if ($errors->has('title'))
                                             <span class="help-block">
                                                 <strong>{{ $errors->first('title') }}</strong>
@@ -357,24 +385,16 @@ input[type='checkbox']:checked:before {
                                         </div>
                                     </div>
 
-                                    <div class="row form-group select-condition">
+                                    <div class="row form-group select-condition form-line">
                                         <label class="col-sm-3">Condition<span class="required"> *</span></label>
-                                        <div class="col-sm-9 user-type d-flex flex-wrap gap-3" role='radiogroup'>
-                                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                                        <div class="col-sm-9" role='radiogroup'>
+                                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                                                 <input type="radio" <?php if(!empty($posts)){ if($posts->condition == '1'){ echo 'checked'; } } ?>  name="condition" value="1" id="new"> 
-                                                <label for="new">New</label>
+                                                <label for="new">New / Fresh</label>
                                             </div>
-                                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                                                 <input type="radio" name="condition" value="2" id="used" <?php if(!empty($posts)){ if($posts->condition == "2"){ echo 'checked'; } } ?> > 
-                                                <label for="used">Used</label>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                                <input type="radio" name="condition" value="3" id="refurbished" <?php if(!empty($posts)){ if($posts->condition == "3"){ echo 'checked'; } } ?> > 
-                                                <label for="refurbished">Refurbished</label>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 col-xl-2">
-                                                <input type="radio" name="condition" value="4" id="scrap" <?php if(!empty($posts)){ if($posts->condition == "4"){ echo 'checked'; } } ?> > 
-                                                <label for="scrap">Scrap</label>
+                                                <label for="used">Old / Used</label>
                                             </div>
                                             @if ($errors->has('condition'))
                                             <span class="help-block">
@@ -386,7 +406,7 @@ input[type='checkbox']:checked:before {
                                     
 
 
-                                    <div class="row form-group add-title">
+                                    <div class="row form-group add-title form-line">
                                         <!--<label class="col-sm-3 label-title">Description<span class="required"> *</span></label>-->
                                         <!-- CSS -->
                                         <style type="text/css">
@@ -429,7 +449,7 @@ input[type='checkbox']:checked:before {
                                         </div>
                                     </div> --}}
                                     
-                                    <div class="row form-group add-image">
+                                    <div class="row form-group add-image form-line">
                                         <label class="col-sm-3 label-title">Images </label>
                                         <div class="col-sm-9">
                                             <h5><i class="fa fa-file-image-o" aria-hidden="true" style="position: absolute;left: 0;top: 3px;font-size: 36px;color: #00a651;"></i>Upload / Drag and Drop Images  <span>Multiple images (jpg, jpeg, png, gif, jfif, heic), 409px X 614px. </span></h5>
@@ -457,7 +477,7 @@ input[type='checkbox']:checked:before {
                                         </div>
                                     </div>
 
-                                     <div class="row form-group add-image">
+                                     <div class="row form-group add-image form-line">
                                         <label class="col-sm-3 label-title">Video </label>
                                         <div class="col-sm-9">
                                             <h5><i class="fa fa-file-video-o" aria-hidden="true" style="position: absolute;left: 0;top: 3px;font-size: 36px;color: #00a651;"></i>Upload / Drag and Drop Video <span>Single video ( mp4, webm, mov, quicktime, 3gp, mpeg), Max 30 Seconds and 10MB.</span></h5>
@@ -507,7 +527,49 @@ input[type='checkbox']:checked:before {
                                 <!-- <h4><a href="javascript:void(0)" onclick="showhide()" style="cursor: pointer;">+ Advance</a></h4> -->
                                 <!-- <div id="newpost" style='display: none'> -->
                                 <div id="newpost" >
-                                    
+                                    <div class="row form-group select-condition form-line">
+                                        <label class="col-sm-3 label-title">Way of Donation<span class="required"> *</span></label>
+                                        <div class="col-sm-9 ">
+                                            <?php
+                                                $_donation_type=-1;
+                                                if(old('donation_type')!='' && old('donation_type')!=2 && old('donation_type')!=3 && old('donation_type')!=4 ) 
+                                                {    $_donation_type=1;     }
+                                            ?>
+                                            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                               
+                                                <input  type="radio" onclick="hidetxtAnyOthermeans()"  checked="checked" name="donation_type" value="1" id="go-f2f"  <?php if(!empty($posts)){ if($posts->donation_type_id == "1"){ echo 'checked'; } } ?>  >
+                                                <label for="go-f2f" data-toggle="tooltip" data-placement="right" title="Go nearby other party & complete donation face to face.">Go & F2F </label>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 col-xl-3">    
+                                                <input  type="radio" onclick="hidetxtAnyOthermeans()" name="donation_type" value="2" id="call-in-f2f"  <?php if(!empty($posts)){ if($posts->donation_type_id == "2"){ echo 'checked'; } } ?>  >
+                                                <label for="call-in-f2f" data-toggle="tooltip" data-placement="right" title="Call in other party & complete donation face to face.">Call in & F2F</label>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 col-xl-3">   
+                                                <input type="radio" onclick="hidetxtAnyOthermeans()" name="donation_type"  value="3" id="by-post"  <?php if(!empty($posts)){ if($posts->donation_type_id == "3"){ echo 'checked'; } } ?>>
+                                                <label for="by-post">  By Post</label>
+                                            </div> 
+                                            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 col-xl-3">    
+                                                <input  type="radio" name="donation_type" value="4" id="any-other" onclick="hidetxtAnyOthermeans()" <?php if(!empty($posts)){ if($posts->donation_type_id == "4"){ echo 'checked'; } } ?>>
+                                                <label for="any-other"> Other way</label>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"> 
+                                                <input
+                                                <?php if(!empty($posts)){ if($posts->donation_type_other != ""){ ?>
+                                                 style="display: block"     
+                                                 <?php }else{?> 
+                                                 style="display: none"     
+                                                 <?php } }else{ ?>
+                                                 style="display: none"     
+                                                 <?php } ?>
+                                                class="form-control" id="txtAnyOthermeans" name="donation_type_other"  type="text"  value="<?php if(!empty($posts)){  echo $posts->donation_type_other ;  } ?>" placeholder="How you will send/receive donation" />
+                                            </div>
+                                        </div>
+                                        @if ($errors->has('donation_type'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('donation_type') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
 
                                     <!-- <div class="row form-group select-condition">
                                         <label class="col-sm-3 label-title">Way of Donation<span class="required"> *</span></label>
@@ -553,7 +615,7 @@ input[type='checkbox']:checked:before {
                                         @endif
                                     </div> -->
                                    
-                                    <div class="row form-group additional hidden">
+                                    <div class="row form-group additional hidden form-line">
                                         <label class="col-sm-3 label-title">Preference<span class="required"> *</span></label>
                                         <div class="col-sm-9 checkbox" id="preference">
                                             <div class="row">
@@ -660,7 +722,7 @@ input[type='checkbox']:checked:before {
                                         </div>
                                     </div>
                                     <br>
-                                    <div class="row form-group additional">
+                                    <div class="row form-group additional form-line">
                                         <label class="col-sm-3 label-title">Price<span class="required"> *</span></label>
                                         <div class="col-sm-9 donationform1">
                                                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
@@ -744,7 +806,7 @@ input[type='checkbox']:checked:before {
                                                     @endif
                                             </div>
                                         </div> -->
-                                        <div class="row form-group additional">
+                                        <div class="row form-group additional form-line">
                                             <label class="col-sm-3 label-title">Urgent<span class="required"> *</span></label>
                                             <div class="col-sm-9 donationform1">
                                                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
@@ -776,7 +838,7 @@ input[type='checkbox']:checked:before {
                                             </div>
                                         </div>
 
-                                        <div class="row form-group">
+                                        <div class="row form-group form-line">
                                             <label class="col-sm-3 label-title">Post Expiry<span class="required"> *</span></label>
                                            <!--  <div class="col-sm-9">
                                                 <input type="datetime-local" class="form-control " name="expiry" value="{{Carbon\Carbon::now()->addDays(7)->format('Y-m-d\TH:i')}}" data-date="<?php if(!empty($posts)){  echo $posts->expired_at ;  } ?>" data-date-format="DD MMMM YYYY"  autocomplete="on">
@@ -1408,23 +1470,23 @@ input[type='checkbox']:checked:before {
                 $(input).next().next().next(".error-li").remove();
                 $(input).css({"border": "1px solid #00a651"});
 
-                // const formLine = input.closest('.form-line');
-                // if (formLine) {
-                //     const inputs = formLine.querySelectorAll('input, textarea, select');
-                //     if (isInputFilled(inputs)) {
-                //         const nextLine = formLine.nextElementSibling;
-                //         if (nextLine && nextLine.classList.contains('form-line')) {
-                //             nextLine.classList.add('active');
+                const formLine = input.closest('.form-line');
+                if (formLine) {
+                    const inputs = formLine.querySelectorAll('input, textarea, select');
+                    if (isInputFilled(inputs)) {
+                        const nextLine = formLine.nextElementSibling;
+                        if (nextLine && nextLine.classList.contains('form-line')) {
+                            nextLine.classList.add('active');
 
-                //             // Find the first input, textarea, or select in the next line and focus it
-                //             const nextInput = nextLine.querySelector('input, textarea, select');
-                //             console.log(nextInput);
-                //             if (nextInput) {
-                //                 nextInput.focus();
-                //             }
-                //         }
-                //     }
-                // }
+                            // Find the first input, textarea, or select in the next line and focus it
+                            const nextInput = nextLine.querySelector('input, textarea, select');
+                            console.log(nextInput);
+                            if (nextInput) {
+                                nextInput.focus();
+                            }
+                        }
+                    }
+                }
             }
 
             // alert(placeSelected);
@@ -1479,23 +1541,23 @@ input[type='checkbox']:checked:before {
                 $(input).next().next().next(".error-li").remove();
                 $(input).css({"border": "1px solid #00a651"});
 
-                // const formLine = input.closest('.form-line');
-                // if (formLine) {
-                //     const inputs = formLine.querySelectorAll('input, textarea, select');
-                //     if (isInputFilled(inputs)) {
-                //         const nextLine = formLine.nextElementSibling;
-                //         if (nextLine && nextLine.classList.contains('form-line')) {
-                //             nextLine.classList.add('active');
+                const formLine = input.closest('.form-line');
+                if (formLine) {
+                    const inputs = formLine.querySelectorAll('input, textarea, select');
+                    if (isInputFilled(inputs)) {
+                        const nextLine = formLine.nextElementSibling;
+                        if (nextLine && nextLine.classList.contains('form-line')) {
+                            nextLine.classList.add('active');
 
-                //             // Find the first input, textarea, or select in the next line and focus it
-                //             const nextInput = nextLine.querySelector('input, textarea, select');
-                //             console.log(nextInput);
-                //             if (nextInput) {
-                //                 nextInput.focus();
-                //             }
-                //         }
-                //     }
-                // }
+                            // Find the first input, textarea, or select in the next line and focus it
+                            const nextInput = nextLine.querySelector('input, textarea, select');
+                            console.log(nextInput);
+                            if (nextInput) {
+                                nextInput.focus();
+                            }
+                        }
+                    }
+                }
             }
 
             alert(placeSelected);
@@ -1549,24 +1611,24 @@ input[type='checkbox']:checked:before {
                 $(input).next().next().next(".error-li").remove();
                 $(input).css({"border": "1px solid #00a651"});
 
-                // const formLine = input.closest('.form-line');
-                // if (formLine) {
-                //     const inputs = formLine.querySelectorAll('input, textarea, select');
-                //     if (isInputFilled(inputs)) {
-                //         const nextLine = formLine.nextElementSibling;
-                //         if (nextLine && nextLine.classList.contains('form-line')) {
-                //             nextLine.classList.add('active');
+                const formLine = input.closest('.form-line');
+                if (formLine) {
+                    const inputs = formLine.querySelectorAll('input, textarea, select');
+                    if (isInputFilled(inputs)) {
+                        const nextLine = formLine.nextElementSibling;
+                        if (nextLine && nextLine.classList.contains('form-line')) {
+                            nextLine.classList.add('active');
 
-                //             // Find the first input, textarea, or select in the next line and focus it
-                //             const nextInput = nextLine.querySelector('input, textarea, select');
-                //             console.log(nextInput);
-                //             if (nextInput) {
-                //                 nextInput.focus();
-                //             }
+                            // Find the first input, textarea, or select in the next line and focus it
+                            const nextInput = nextLine.querySelector('input, textarea, select');
+                            console.log(nextInput);
+                            if (nextInput) {
+                                nextInput.focus();
+                            }
 
-                //         }
-                //     }
-                // }
+                        }
+                    }
+                }
             }
 
         });
@@ -1602,55 +1664,55 @@ input[type='checkbox']:checked:before {
 
 
     // Form Step by Step Show START
-    // document.addEventListener('DOMContentLoaded', () => {
-    //     const formLines = document.querySelectorAll('.form-line');
-    //     console.log('Form Lines:', formLines);
+    document.addEventListener('DOMContentLoaded', () => {
+        const formLines = document.querySelectorAll('.form-line');
+        console.log('Form Lines:', formLines);
 
-    //     formLines.forEach((line, index) => {
-    //         if (index < formLines.length - 1) {
-    //             const inputs = line.querySelectorAll('input, textarea, select');
-    //             console.log(`Line ${index + 1} inputs:`, inputs);
+        formLines.forEach((line, index) => {
+            if (index < formLines.length - 1) {
+                const inputs = line.querySelectorAll('input, textarea, select');
+                console.log(`Line ${index + 1} inputs:`, inputs);
 
-    //             inputs.forEach(input => {
-    //                 input.addEventListener('input', () => {
-    //                     console.log(`Input value: ${input.value}`);
-    //                     if (isInputFilled(inputs)) {
-    //                         console.log(`Line ${index + 1} is filled. Showing Line ${index + 2}`);
-    //                         formLines[index + 1].classList.add('active');
+                inputs.forEach(input => {
+                    input.addEventListener('input', () => {
+                        console.log(`Input value: ${input.value}`);
+                        if (isInputFilled(inputs)) {
+                            console.log(`Line ${index + 1} is filled. Showing Line ${index + 2}`);
+                            formLines[index + 1].classList.add('active');
 
-    //                         // Find the first input, textarea, or select in the next line and focus it
-    //                         const nextInput = formLines[index + 1].querySelector('input, textarea, select');
-    //                         console.log(nextInput);
-    //                         if (nextInput) {
-    //                             nextInput.focus();
-    //                         }
-    //                     }
-    //                 });
-    //             });
-    //         }
-    //     });
-    // });
+                            // Find the first input, textarea, or select in the next line and focus it
+                            const nextInput = formLines[index + 1].querySelector('input, textarea, select');
+                            console.log(nextInput);
+                            if (nextInput) {
+                                nextInput.focus();
+                            }
+                        }
+                    });
+                });
+            }
+        });
+    });
 
-    // function isInputFilled(inputs) {
-    //     return Array.from(inputs).every(input => {
-    //         if (input.type === 'radio') {
-    //             const radioGroup = Array.from(inputs).filter(radio => radio.name === input.name);
-    //             const isRadioChecked = radioGroup.some(radio => radio.checked);
-    //             console.log(`Radio group '${input.name}' is checked:`, isRadioChecked);
-    //             return isRadioChecked;
-    //         }
+    function isInputFilled(inputs) {
+        return Array.from(inputs).every(input => {
+            if (input.type === 'radio') {
+                const radioGroup = Array.from(inputs).filter(radio => radio.name === input.name);
+                const isRadioChecked = radioGroup.some(radio => radio.checked);
+                console.log(`Radio group '${input.name}' is checked:`, isRadioChecked);
+                return isRadioChecked;
+            }
 
-    //         if (input.type === 'file') {
-    //             // Allow file inputs (e.g., video) to be optional
-    //             console.log(`File input '${input.name}' is optional.`);
-    //             return true;
-    //         }
+            if (input.type === 'file') {
+                // Allow file inputs (e.g., video) to be optional
+                console.log(`File input '${input.name}' is optional.`);
+                return true;
+            }
 
-    //         const isFilled = input.value.trim() !== '';
-    //         console.log(`Input '${input.name}' is filled:`, isFilled);
-    //         return isFilled;
-    //     });
-    // }
+            const isFilled = input.value.trim() !== '';
+            console.log(`Input '${input.name}' is filled:`, isFilled);
+            return isFilled;
+        });
+    }
 
     // Form Step by Step Show END
 
@@ -1731,8 +1793,11 @@ input[type='checkbox']:checked:before {
     });
     
     $('input[name="landmark"]').on('keyup',function(){
+        alert('id');
+    });
+    $('input[name="landmark"]').on('keyup',function(){
         var text_=$(this);
-        
+        alert();
         if(text_.val().length<5 || text_.val().length>50)
         {
             if($(this).parent().children(".error-li").length<1)

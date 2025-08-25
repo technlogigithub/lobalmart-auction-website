@@ -62,7 +62,7 @@ class SpecificationController extends Controller
         foreach($specifications as $specification){
             $var .='
                     <li>
-                        <a class="specification" id="'. $specification->key.'" > '. $specification->name .' <span>(20)</span>
+                        <a href="javascript:void(0)" class="specification" id="'. $specification->key.'" > '. $specification->name .' <span>(20)</span>
                         </a>
                     </li>
                     ';

@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="banner-content">
-                    <h4>OTP Verification</h4>
+                    <h4>OTP Verification 12</h4>
                     <ul class="breadcrumb-list">
                         <li><a href="{{ route('web.home') }}">Home</a></li>
                         <li>OTP Verification</li>

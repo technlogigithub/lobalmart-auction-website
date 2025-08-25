@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="banner-content">
-                            <h4>Auction Form</h4>
+                            <h4>Auction Category</h4>
                             <ul class="breadcrumb-list">
                                 <li><a href="{{ route('web.home') }}">Home</a></li>
                                 <li>Select Category</li>
@@ -40,7 +40,7 @@
                                         <div class="alert alert-success">{{ Session::get('success') }}</div>
                                     @endif 
                                     
-                                    <input type="text"  autocomplete="off" list="category_list" name="specification_search" id="search_category" class="form-control input-lg" placeholder="Search and select your donation category"  style="margin-left: 0px; width: 88% !important; min-width: 5% !important;" />
+                                    <input type="text"  autocomplete="off" list="category_list" name="specification_search" id="search_category" class="form-control input-lg" placeholder="Search and select your auction category"  style="margin-left: 0px; width: 88% !important; min-width: 5% !important;" />
                                     
                                         <datalist id="category_list" >
                                             
@@ -83,7 +83,7 @@
                                         
                                         @foreach($categories as $category)
                                             <li>
-                                                <a href="javascript:void(0)" class="category"  id="{{$category->key}}"> {{ $category->name }} <span>(20)</span>
+                                                <a href="javascript:void(0)" class="category"  id="{{$category->key}}"> {{ $category->name }} <span></span>
                                                 </a>
                                             </li>
                                         @endforeach
@@ -229,7 +229,7 @@ $(document).ready(function(){
             // $('#new_category_id').append('<input type="hidden" name="select_category" id="select_category" value="'+data+'" />');
             
             
-            $('<a class="category"  id='+ data +' aria-controls="cat1" role="tab" data-toggle="tab" ><li>'+ category_name +'</li> </a>').insertBefore(".category:first");
+            $('<a href="javascript:void(0)" class="category"  id='+ data +' aria-controls="cat1" role="tab" data-toggle="tab" ><li>'+ category_name +'</li> </a>').insertBefore(".category:first");
 
             $('.button_section').hide();
             $id = data; //Key of category
@@ -282,7 +282,7 @@ $(document).ready(function(){
 
           // $('#new_subcategory_id').append('<input type="hidden" name="select_subcategory" id="select_subcategory" value="'+data+'" />');
 
-          $('<a class="subcategory"  id='+ data +' aria-controls="platelets" role="tab" data-toggle="tab" ><li>'+ subcategory_name +'</li> </a>').insertBefore(".new_added_subcategory");
+          $('<a href="javascript:void(0)" class="subcategory"  id='+ data +' aria-controls="platelets" role="tab" data-toggle="tab" ><li>'+ subcategory_name +'</li> </a>').insertBefore(".new_added_subcategory");
 
 
 
@@ -340,7 +340,7 @@ $(document).ready(function(){
               // $('.category').not($('#'+data+'').parents().addBack()).hide();
               
               $('.specification').hide();
-              $('<a class="specification"  id='+ data +' aria-controls="platelets" role="tab" data-toggle="tab" ><li>'+ specification_name +'</li> </a>').insertBefore(".new_added_specification");
+              $('<a href="javascript:void(0)" class="specification"  id='+ data +' aria-controls="platelets" role="tab" data-toggle="tab" ><li>'+ specification_name +'</li> </a>').insertBefore(".new_added_specification");
 
               
               // $('.Scategory:first').prepend('<a class="category"  id='+ data +' aria-controls="cat1" role="tab" data-toggle="tab" ><li class="">'+ specification_name +'</li> </a>');

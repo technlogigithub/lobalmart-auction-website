@@ -154,7 +154,7 @@
         
         <!-- <title>@yield('title')</title> -->
 
-        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <meta name="apple-mobile-web-app-title" content="Lobal Mart">
         <meta name="msapplication-TileImage" content="{{ URL::asset('/uploads/images/favicon.png')}}">
@@ -171,6 +171,8 @@
         <link rel="stylesheet" href="{{ URL::asset('/css/user/css/jquery.fancybox.min.css')}}">
         <link rel="stylesheet" href="{{ URL::asset('/css/user/css/boxicons.min.css')}}">
         <link rel="stylesheet" href="{{ URL::asset('/css/user/css/style.css')}}">
+        
+        <link rel="stylesheet" href="{{ URL::asset('/css/user/css/main.css')}}">
         
 
         <!--favicon-->
@@ -215,7 +217,7 @@
         <script src="{{ URL::asset('/js/user/js/main.js')}}"></script>
 
 		<script src="{{ URL::asset('/js/user/js/range-slider.js')}}"></script>
-
+        
         
         <script src="{{ URL::asset('/js/user/js/custom.js')}}"></script> 
        
@@ -313,20 +315,39 @@
 
             if(navigator.geolocation) 
             {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                var positionInfo = "Your current position is (" + "Latitude: " + position.coords.latitude + ", " + "Longitude: " + position.coords.longitude + ")";
-                var latitude = position.coords.latitude;
-                var longitude = position.coords.longitude;
-                var accuracy = position.coords.accuracy;
+                // navigator.geolocation.getCurrentPosition(function(position) {
+                // var positionInfo = "Your current position is (" + "Latitude: " + position.coords.latitude + ", " + "Longitude: " + position.coords.longitude + ")";
+                // var latitude = position.coords.latitude;
+                // var longitude = position.coords.longitude;
+                // var accuracy = position.coords.accuracy;
+
+                // alert(latitude);
+                // alert(longitude);
+                // alert(accuracy);
+                // document.cookie = "lt=" + latitude;
+                // document.cookie = "lg=" + longitude;
+                // document.cookie = "accu=" + accuracy;
 
                 
+                // });
+
+                // const getCookie = name => Object.fromEntries(document.cookie.split('; ').map(c => c.split('=')))[name];
+                // const latitude = getCookie('lt');
+                // const longitude = getCookie('lg');
+                // const accuracy = getCookie('accu');
+
+                let city_search_box = $('input[name="city_search_box"]').val();
+                let latitude = $('input[name="search_latitude"]').val();
+                let longitude = $('input[name="search_longitude"]').val();
+                let accuracy = '05';
+
                 document.cookie = "lt=" + latitude;
                 document.cookie = "lg=" + longitude;
                 document.cookie = "accu=" + accuracy;
 
-                
-                });
-
+                alert(latitude);
+                alert(longitude);
+                alert(accuracy);
 
                 // to send location data to google analytics 
                 navigator.geolocation.getCurrentPosition(sendPosition, showError);
@@ -338,7 +359,7 @@
                 alert("Sorry, your browser does not support HTML5 geolocation.");
             }
 
-
+            
 
             // to send location data to google analytics
             function sendPosition(position) {
@@ -452,7 +473,70 @@
         if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57)) 
             return false; 
         return true; 
-    } 
+    }
+    
+    function initialize() {
+      var input = document.getElementById('searchTextField1');
+      var options = {
+            types: ['establishment'],
+            componentRestrictions: {
+                country: 'in'
+            } //this should work !
+      };
+      
+
+        var autocomplete = new google.maps.places.Autocomplete(input, options);
+        autocomplete.addListener('place_changed', function() {
+
+            var place = autocomplete.getPlace(); 
+            $('input[name="search_latitude"]').val(place.geometry.location.lat());  // Lat Long
+            $('input[name="search_longitude"]').val(place.geometry.location.lng());  // Lat Long
+                    
+
+            var value = document.getElementById('searchTextField1').value;
+                    
+                    
+
+            var text_=$(this);
+            // var location = new RegExp('^[a-zA-Z0-9 ]+\,[a-zA-Z0-9 ]+\,[a-zA-Z0-9 ]+\,[a-zA-Z0-9 ]{3}');
+            var location = new RegExp('/^([^,]+,){3}[^,]+$/');
+                    
+                        
+                    
+            // if(value.length < 15 || location.test(value) == false)
+            if (!place.geometry && value.length > 0)
+            {
+                placeSelected = false;
+                $('.search_btn').attr('disabled', 'disabled');
+
+                if($(input).parent().children(".error-li").length<1)
+                {
+                    // $(input).parent().append('<li class="error-li"> Select proper location</li>');
+                    $(input).css({"border": "1px solid #d75d54"});
+                    // from_error['searchTextField']="Invalid Donation Address";
+
+                    $('input[name="search_latitude"]').val('');  // Lat Long
+                    $('input[name="search_longitude"]').val('');  // Lat Long
+                            
+                }
+            }
+            else 
+            {
+                        
+                placeSelected = true;
+                $('.search_btn').removeAttr('disabled');
+
+                $(input).next(".error-li").remove();
+                $(input).next().next(".error-li").remove();
+                $(input).next().next().next(".error-li").remove();
+                $(input).css({"border": "1px solid #00a651"});
+            }
+
+        });
+
+   }
+
+    window.addEventListener('load', initialize);
 </script> 
 
         @stack('javaScript')

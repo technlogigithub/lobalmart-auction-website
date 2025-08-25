@@ -65,10 +65,10 @@ self.addEventListener('install', (e) => {
     caches.open('fox-store').then((cache) => {
       // Add resources to cache here, e.g., images, CSS, JavaScript files
       return cache.addAll([
-        'https://doncen.org/css/user/css/bootstrap.min.css',
+        'https://lobalmart.com/css/user/css/bootstrap.min.css',
         // Add other resources here, e.g., images, JavaScript files
         // Make sure to include the start_url from your manifest.json
-        'https://doncen.org/donation-near-me/lat-22.7007685/lon-75.8415264/dist_frm-0/dist_to-5/dist_unt-KM/dd-1'
+        'https://lobalmart.com/donation-near-me/lat-22.7007685/lon-75.8415264/dist_frm-0/dist_to-5/dist_unt-KM/dd-1'
       ]);
     }),
   );

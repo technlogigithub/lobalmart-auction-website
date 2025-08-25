@@ -333,16 +333,26 @@ class WebController extends Controller
                 Session::forget('specification');
             }
             $posts =array();
-            $specification = Specification::where('key',$key)->first();
-            $subcategory = $specification->subcategory;
-            $category = $subcategory->category;
-            $user = Auth::guard('user')->user();
 
             
-            $user_types = DB::table('user_types')->select('name','key')->where('status',1)->get();
-          
-			return view('web.page.donation_detail',compact('specification','subcategory','category','user_types','key','user','posts'));
+            
+            if(Auth::guard('user')->user())
+            {
+                $specification = Specification::where('key',$key)->first();
+                $subcategory = $specification->subcategory;
+                $category = $subcategory->category;
+                $user = Auth::guard('user')->user();
 
+                $user_types = DB::table('user_types')->select('name','key')->where('status',1)->get();
+            
+                return view('web.page.donation_detail',compact('specification','subcategory','category','user_types','key','user','posts'));
+
+            }
+            else
+            {
+                return redirect()->route('web.donation.category');
+            }
+            
 
         }catch(\Exception $e){
             return redirect()->route('web.donation.category')->with('error','Please select category, subcategory and specifications.');

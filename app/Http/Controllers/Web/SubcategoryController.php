@@ -77,7 +77,7 @@ class SubcategoryController extends Controller
         foreach($subcategories as $subcategory){
             $var .= '
                     <li>
-                            <a class="subcategory" id="'. $subcategory->key.'" > '. $subcategory->name .' <span>(20)</span>
+                            <a href="javascript:void(0)" class="subcategory" id="'. $subcategory->key.'" > '. $subcategory->name .' <span>(20)</span>
                             </a>
                         </li>
 

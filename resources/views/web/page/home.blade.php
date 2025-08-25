@@ -442,7 +442,7 @@
 @push('javaScript')
 
 
-<script async src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAQsVSjofHfiWHWqai-0shuFexPke1-NEQ&callback=initMap" type="text/javascript"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAQsVSjofHfiWHWqai-0shuFexPke1-NEQ&callback=initMap" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function() {
       $(window).keydown(function(event){
@@ -452,68 +452,68 @@
         }
       });
     });
-   function initialize() {
-      var input = document.getElementById('searchTextField');
-      var options = {
-            types: ['establishment'],
-            componentRestrictions: {
-                country: 'in'
-            } //this should work !
-      };
+  //  function initialize() {
+  //     var input = document.getElementById('searchTextField');
+  //     var options = {
+  //           types: ['establishment'],
+  //           componentRestrictions: {
+  //               country: 'in'
+  //           } //this should work !
+  //     };
       
 
-        var autocomplete = new google.maps.places.Autocomplete(input, options);
-        autocomplete.addListener('place_changed', function() {
+  //       var autocomplete = new google.maps.places.Autocomplete(input, options);
+  //       autocomplete.addListener('place_changed', function() {
 
-            var place = autocomplete.getPlace(); 
-            $('input[name="search_latitude"]').val(place.geometry.location.lat());  // Lat Long
-            $('input[name="search_longitude"]').val(place.geometry.location.lng());  // Lat Long
+  //           var place = autocomplete.getPlace(); 
+  //           $('input[name="search_latitude"]').val(place.geometry.location.lat());  // Lat Long
+  //           $('input[name="search_longitude"]').val(place.geometry.location.lng());  // Lat Long
                     
 
-            var value = document.getElementById('searchTextField').value;
+  //           var value = document.getElementById('searchTextField').value;
                     
                     
 
-            var text_=$(this);
-            // var location = new RegExp('^[a-zA-Z0-9 ]+\,[a-zA-Z0-9 ]+\,[a-zA-Z0-9 ]+\,[a-zA-Z0-9 ]{3}');
-            var location = new RegExp('/^([^,]+,){3}[^,]+$/');
+  //           var text_=$(this);
+  //           // var location = new RegExp('^[a-zA-Z0-9 ]+\,[a-zA-Z0-9 ]+\,[a-zA-Z0-9 ]+\,[a-zA-Z0-9 ]{3}');
+  //           var location = new RegExp('/^([^,]+,){3}[^,]+$/');
                     
                         
                     
-            // if(value.length < 15 || location.test(value) == false)
-            if (!place.geometry && value.length > 0)
-            {
-                placeSelected = false;
-                $('.search_btn').attr('disabled', 'disabled');
+  //           // if(value.length < 15 || location.test(value) == false)
+  //           if (!place.geometry && value.length > 0)
+  //           {
+  //               placeSelected = false;
+  //               $('.search_btn').attr('disabled', 'disabled');
 
-                if($(input).parent().children(".error-li").length<1)
-                {
-                    // $(input).parent().append('<li class="error-li"> Select proper location</li>');
-                    $(input).css({"border": "1px solid #d75d54"});
-                    // from_error['searchTextField']="Invalid Donation Address";
+  //               if($(input).parent().children(".error-li").length<1)
+  //               {
+  //                   // $(input).parent().append('<li class="error-li"> Select proper location</li>');
+  //                   $(input).css({"border": "1px solid #d75d54"});
+  //                   // from_error['searchTextField']="Invalid Donation Address";
 
-                    $('input[name="search_latitude"]').val('');  // Lat Long
-                    $('input[name="search_longitude"]').val('');  // Lat Long
+  //                   $('input[name="search_latitude"]').val('');  // Lat Long
+  //                   $('input[name="search_longitude"]').val('');  // Lat Long
                             
-                }
-            }
-            else 
-            {
+  //               }
+  //           }
+  //           else 
+  //           {
                         
-                placeSelected = true;
-                $('.search_btn').removeAttr('disabled');
+  //               placeSelected = true;
+  //               $('.search_btn').removeAttr('disabled');
 
-                $(input).next(".error-li").remove();
-                $(input).next().next(".error-li").remove();
-                $(input).next().next().next(".error-li").remove();
-                $(input).css({"border": "1px solid #00a651"});
-            }
+  //               $(input).next(".error-li").remove();
+  //               $(input).next().next(".error-li").remove();
+  //               $(input).next().next().next(".error-li").remove();
+  //               $(input).css({"border": "1px solid #00a651"});
+  //           }
 
-        });
+  //       });
 
-   }
+  //  }
 
-    window.addEventListener('load', initialize);
+  //   window.addEventListener('load', initialize);
 
     $('input[name="city_search_box"]').bind('keyup change',function(){
             var text_=$(this);

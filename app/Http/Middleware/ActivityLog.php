@@ -130,13 +130,13 @@ class ActivityLog
 	        $manifest = [
 	            "lang" => "en",
 	            "dir" => "ltr",
-	            "name" => "Doncen.org",
-	            "short_name" => "Doncen",
+	            "name" => "Lobalmart.com",
+	            "short_name" => "LobalMat",
 	            "start_url" => URL::current(),
-	            "description" => "Donate ANYTHING, whatever you can think.",
+	            "description" => "Local to Global Marketplace.",
 	            "display" => "standalone",
 
-	             "categories" => ["donation", "charity", "non-profit"],
+	             "categories" => ["auction", "buy", "sell"],
 				  "screen_orientation" => ["portrait", "landscape"],
 				  "theme_color" => "#ffffff",
 				  "background_color" => "#f2f2f2",
@@ -232,8 +232,45 @@ class ActivityLog
 		
 		// echo "<pre>";
 		// print_r($_COOKIE);
+
+		// print_r($request->search_latitude);
+        // print_r($request->search_longitude);
+        // print_r($request->city_search_box);
 		
-		if(!empty($_COOKIE['lt']))
+		$Sessiondata = session()->get('search', []);
+		// echo "<pre>";
+		// print_r($Sessiondata);
+		// die();
+		$clt = "";
+		$clg = "";
+		$cloc = "";
+        // 2. Loop through each item and remove the keys
+			foreach ($Sessiondata as &$item) {
+				if($item)
+                {
+                    $clt = $item['clt'];
+                    $clg = $item['clg'];
+                    $cloc = $item['cloc'];
+
+                }
+                
+			}
+		
+		if($request->search_latitude && $request->search_longitude && $request->city_search_box)
+		{
+			$lat = $request->search_latitude;
+			$lng = $request->search_longitude;
+
+			$location_source = 'Header Form';
+		}
+		elseif(!empty($clt) && !empty($clg) && !empty($cloc))
+		{
+			$lat = $clt;
+			$lng = $clg;
+
+			$location_source = 'Session';
+		}
+		elseif(!empty($_COOKIE['lt']))
 		{
 
 				// $lat = $_COOKIE['latitude'];
@@ -292,15 +329,54 @@ class ActivityLog
 
 		   $location = $geoloc['results'][0]['formatted_address'];
 		   
-		   // $keysToForget = ['clt', 'clg'];
-			// Session::forget($keysToForget);
+			//    $keysToForget = ['clt', 'clg'];
+			// 	Session::forget($keysToForget);
 
+			// Session::forget('search','');
+
+			
+
+			// 1. Retrieve the session data
+			$Sessiondata = session()->get('search', []);
+
+			// 2. Loop through each item and remove the keys
+			foreach ($Sessiondata as &$item) {
+				unset($item['clt'], $item['clg'], $item['cloc']);
+			}
+			// Unset reference to avoid unexpected behavior
+			unset($item);
+
+			// 3. Save the updated array back to session
+			session()->put('search', $Sessiondata);
+
+			// 4. (Optional) Print to check the result
+			// echo "<pre>";
+			// print_r($Sessiondata);
+			// die();
+		
 			Session::push('search', [
-                
-	                'clt'=> $lat,
-	                'clg'=> $lng,
-	                'cloc' => $location
-	            ]);
+			
+				'clt'=> $lat,
+				'clg'=> $lng,
+				'cloc' => $location
+			]);
+
+			// echo $lat;
+			// echo $lng;
+			// echo "<pre>";
+			// print_r($_COOKIE);
+			// die();
+			// Set cookies from session
+			// if ($lat) {
+			// 	setcookie('lt', $lat, time() + (86400 * 30), "/");
+			// 	setcookie('lg', $lng, time() + (86400 * 30), "/");
+			// 	setcookie('accu', 'actLog', time() + (86400 * 30), "/");
+			// }
+			
+			// echo "<pre>";
+			// print_r($_COOKIE);
+			// die();	
+			
 			
 			$full_address_arr = array_reverse($geoloc['results'][0]['address_components']);
 			

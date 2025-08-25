@@ -434,7 +434,7 @@
 <script src="{{ URL::asset('/js/user/js/jquery.min.js')}}"></script>
 <script src="{{ URL::asset('/js/user/js/jquery-ui.min.js')}}"></script>
 
-<script async src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAQsVSjofHfiWHWqai-0shuFexPke1-NEQ&callback=initMap" type="text/javascript"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAQsVSjofHfiWHWqai-0shuFexPke1-NEQ&callback=initMap" type="text/javascript"></script>
 
 
 <!-- <script type="text/javascript">
